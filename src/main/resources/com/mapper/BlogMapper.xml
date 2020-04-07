@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.BlogMapper">
+    <insert id="insertBlog" parameterType="blog">
+        insert into mybatis.blog(id, title, author, created_at, views)
+            value (#{id}, #{title}, #{author}, #{createdAt}, #{views});
+    </insert>
+
+    <delete id="deleteBlog" parameterType="string">
+        delete
+        from mybatis.blog
+        where id = #{id};
+    </delete>
+
+    <update id="updateBlog" parameterType="blog">
+        update mybatis.blog
+        set title  = #{title},
+            author = #{author},
+            views  = #{views}
+        where id = #{id};
+    </update>
+
+    <update id="updateBlogByMap" parameterType="map">
+        update mybatis.blog
+        <set>
+            <if test="title != null">title = #{title},</if>
+            <if test="author != null">author = #{author},</if>
+            <if test="views != null">views = #{views},</if>
+        </set>
+        where id = #{bid};
+    </update>
+
+    <select id="queryBlogByID" parameterType="string" resultType="blog">
+        select *
+        from mybatis.blog
+        where id = #{id};
+    </select>
+
+    <select id="queryAllBlog" resultType="blog">
+        select *
+        from mybatis.blog;
+    </select>
+
+    <select id="searchBlogByTitleKey" resultType="blog">
+        select *
+        from mybatis.blog
+        where title like concat('%', #{key}, '%');
+    </select>
+</mapper>
