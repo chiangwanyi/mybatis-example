@@ -1,8 +1,4 @@
-# Mybatis 项目搭建 (IDEA)
-
-一个简单的 Mybatis 项目，实现了增删改查功能，具体步骤如下
-
-## 1. 导入依赖
+# 1. 导入依赖
 
 > pom.xml
 
@@ -51,7 +47,7 @@
 ```
 
 
-## 2. 配置`db.properties`
+# 2. 配置`db.properties`
 
 > src/main/resources/db.properties
 
@@ -66,7 +62,7 @@ password=123456
 
 
 
-## 3. 创建工具类`MybatisUtils`
+# 3. 创建工具类`MybatisUtils`
 
 > src/main/java/com/utils/MybatisUtils.java
 
@@ -94,9 +90,9 @@ public class MybatisUtils {
 
 
 
-## 4. 创建业务相关类
+# 4. 创建业务相关类
 
-### 4.1 `POJO`
+## 4.1 `POJO`
 
 > src/main/java/com/pojo/Blog.java
 
@@ -112,28 +108,36 @@ public class Blog {
 }
 ```
 
-### 4.2 `Mapper`
+这里使用了`lombok`快速创建了`Blog`的 `setter`, `getter`, `constructor` 等方法
+
+![image-20200407155337519](http://q8aqauxg5.bkt.clouddn.com/image-20200407155337519.png)
+
+## 4.2 `Mapper`
 
 > src/main/java/com/mapper/BlogMapper.java
 
 基础的 CRUD 接口
 
 ```java
-package com.com.mapper;
-
-import com.pojo.Blog;
-
-import java.util.List;
-
 public interface BlogMapper {
     int insertBlog(Blog blog);
+
     int deleteBlog(String id);
+
+    int updateBlog(Blog blog);
+
+    int updateBlogByMap(Map<String, Object> map);
+
     Blog queryBlogByID(String id);
+
     List<Blog> queryAllBlog();
+
+    // 模糊查询
+    List<Blog> searchBlogByTitleKey(String key);
 }
 ```
 
-## 5. 配置`mybatis-config.xml`
+# 5. 配置`mybatis-config.xml`
 
 > src/main/resources/mybatis-config.xml
 
@@ -179,7 +183,7 @@ public interface BlogMapper {
 </configuration>
 ```
 
-## 6. 配置`BlogMapper.xml`
+# 6. 配置`BlogMapper.xml`
 
 > src/main/resources/com/mapper/BlogMapper.xml
 
@@ -239,9 +243,9 @@ public interface BlogMapper {
 </mapper>
 ```
 
-## 7. 测试类
+# 7. 测试类
 
-### 7.1 插入数据
+## 7.1 插入数据
 
 ```java
 public void insertBlog() {
@@ -256,7 +260,7 @@ public void insertBlog() {
 }
 ```
 
-### 7.2 删除数据
+## 7.2 删除数据
 
 ```java
 public void deleteBlog() {
@@ -271,7 +275,7 @@ public void deleteBlog() {
 }
 ```
 
-### 7.3 更新数据（全部更新）
+## 7.3 更新数据（全部更新）
 
 ```java
 public void updateBlog() {
@@ -286,7 +290,7 @@ public void updateBlog() {
 }
 ```
 
-### 7.4 更新数据（按需更新）
+## 7.4 更新数据（按需更新）
 
 ```java
 public void updateBlogByMap() {
@@ -304,7 +308,7 @@ public void updateBlogByMap() {
 }
 ```
 
-### 7.5 查询数据（通过 ID）
+## 7.5 查询数据（通过 ID）
 
 ```java
 public void queryBlogByID() {
@@ -316,7 +320,7 @@ public void queryBlogByID() {
 }
 ```
 
-### 7.6 查询所有数据
+## 7.6 查询所有数据
 
 ```java
 public void queryAllBlog() {
@@ -330,7 +334,7 @@ public void queryAllBlog() {
 }
 ```
 
-### 7.7 模糊查找
+## 7.7 模糊查找
 
 ```java
 public void searchBlogByTitleKey() {
@@ -343,3 +347,4 @@ public void searchBlogByTitleKey() {
     }
 }
 ```
+
